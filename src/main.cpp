@@ -61,6 +61,37 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuFilteredHistory() {
+    std::string accId;
+    std::cout << "Account ID: "; std::cin >> accId;
+    Account* acc = bank.findAccount(accId);
+    if (!acc) { std::cout << "Account not found.\n"; return; }
+
+    std::cout << "Filter by type:\n"
+              << "  1. DEPOSIT\n"
+              << "  2. WITHDRAWAL\n"
+              << "  3. TRANSFER_IN\n"
+              << "  4. TRANSFER_OUT\n"
+              << "  0. All (no filter)\n"
+              << "Choice: ";
+    int f; std::cin >> f;
+
+    if (f == 0) {
+        acc->printHistory();
+        return;
+    }
+
+    TxType filter;
+    switch (f) {
+        case 1: filter = TxType::DEPOSIT;       break;
+        case 2: filter = TxType::WITHDRAWAL;    break;
+        case 3: filter = TxType::TRANSFER_IN;   break;
+        case 4: filter = TxType::TRANSFER_OUT;  break;
+        default: std::cout << "Invalid filter.\n"; return;
+    }
+    acc->printHistory(&filter);
+}
+
 void menuDeleteClient() {
     std::string clientId;
     std::cout << "Client ID to delete: "; std::cin >> clientId;
@@ -138,6 +169,7 @@ int main() {
                   << "12. Unlock account\n"
                   << "13. Find client by name\n"
                   << "14. Delete client\n"
+                  << "15. Transaction history (filtered)\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -165,6 +197,7 @@ int main() {
             case 12: menuUnlockAccount(); break;
             case 13: menuFindClientByName(); break;
             case 14: menuDeleteClient(); break;
+            case 15: menuFilteredHistory(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }
