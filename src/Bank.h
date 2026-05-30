@@ -36,6 +36,20 @@ public:
         for (auto& c : clients) c->display();
     }
 
+    bool updateClientName(const std::string& clientId, const std::string& newName) {
+        Client* c = findClient(clientId);
+        if (!c) return false;
+        try { c->setName(newName); return true; }
+        catch (const std::exception& e) { std::cout << "Error: " << e.what() << "\n"; return false; }
+    }
+
+    bool updateClientEmail(const std::string& clientId, const std::string& newEmail) {
+        Client* c = findClient(clientId);
+        if (!c) return false;
+        try { c->setEmail(newEmail); return true; }
+        catch (const std::exception& e) { std::cout << "Error: " << e.what() << "\n"; return false; }
+    }
+
     bool removeClient(const std::string& clientId) {
         auto it = std::find_if(clients.begin(), clients.end(),
             [&](const std::unique_ptr<Client>& c){ return c->getId() == clientId; });

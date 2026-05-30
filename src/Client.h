@@ -20,6 +20,18 @@ public:
     std::string getName() const { return name; }
     std::string getEmail() const { return email; }
 
+    void setName(const std::string& newName) {
+        if (newName.empty()) throw std::invalid_argument("Name cannot be empty.");
+        name = newName;
+        std::cout << "Name updated to \"" << newName << "\"\n";
+    }
+
+    void setEmail(const std::string& newEmail) {
+        if (newEmail.empty()) throw std::invalid_argument("Email cannot be empty.");
+        email = newEmail;
+        std::cout << "Email updated to \"" << newEmail << "\"\n";
+    }
+
     void addAccount(Account* acc) { accounts.push_back(acc); }
 
     const std::vector<Account*>& getAccounts() const { return accounts; }

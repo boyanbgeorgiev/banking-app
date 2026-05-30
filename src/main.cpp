@@ -61,6 +61,30 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuEditClient() {
+    std::string clientId;
+    std::cout << "Client ID: "; std::cin >> clientId;
+    Client* c = bank.findClient(clientId);
+    if (!c) { std::cout << "Client not found.\n"; return; }
+
+    std::cout << "What to edit?\n"
+              << "  1. Name\n"
+              << "  2. Email\n"
+              << "Choice: ";
+    int choice; std::cin >> choice;
+
+    std::string value;
+    if (choice == 1) {
+        std::cout << "New name: "; std::cin >> value;
+        bank.updateClientName(clientId, value);
+    } else if (choice == 2) {
+        std::cout << "New email: "; std::cin >> value;
+        bank.updateClientEmail(clientId, value);
+    } else {
+        std::cout << "Invalid choice.\n";
+    }
+}
+
 void menuChangeInterestRate() {
     std::string accId;
     double rate;
@@ -180,6 +204,7 @@ int main() {
                   << "14. Delete client\n"
                   << "15. Transaction history (filtered)\n"
                   << "16. Change interest rate (savings)\n"
+                  << "17. Edit client info\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -209,6 +234,7 @@ int main() {
             case 14: menuDeleteClient(); break;
             case 15: menuFilteredHistory(); break;
             case 16: menuChangeInterestRate(); break;
+            case 17: menuEditClient(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }
