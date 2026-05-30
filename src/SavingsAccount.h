@@ -30,6 +30,14 @@ public:
                   << ". New balance: " << balance << "\n";
     }
 
+    void setInterestRate(double newRate) {
+        if (newRate < 0) throw std::invalid_argument("Interest rate cannot be negative.");
+        interestRate = newRate;
+        std::cout << "Interest rate updated to " << (newRate * 100) << "%\n";
+    }
+
+    double getInterestRate() const { return interestRate; }
+
     void display() const override {
         std::cout << "SavingsAccount [" << id << "]"
                   << " | Balance: " << std::fixed << std::setprecision(2) << balance

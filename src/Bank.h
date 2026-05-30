@@ -81,6 +81,20 @@ public:
         for (auto& a : accounts) a->applyInterest();
     }
 
+    bool setAccountInterestRate(const std::string& accId, double newRate) {
+        Account* acc = findAccount(accId);
+        if (!acc) return false;
+        SavingsAccount* sav = dynamic_cast<SavingsAccount*>(acc);
+        if (!sav) { std::cout << "Account is not a savings account.\n"; return false; }
+        try {
+            sav->setInterestRate(newRate);
+            return true;
+        } catch (const std::exception& e) {
+            std::cout << "Error: " << e.what() << "\n";
+            return false;
+        }
+    }
+
     void listAllAccounts() const {
         std::cout << "\n=== All Accounts ===\n";
         if (accounts.empty()) { std::cout << "No accounts.\n"; return; }

@@ -61,6 +61,15 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuChangeInterestRate() {
+    std::string accId;
+    double rate;
+    std::cout << "Savings account ID: "; std::cin >> accId;
+    std::cout << "New interest rate (e.g. 0.05 for 5%): "; std::cin >> rate;
+    if (!bank.setAccountInterestRate(accId, rate))
+        std::cout << "Failed to update interest rate.\n";
+}
+
 void menuFilteredHistory() {
     std::string accId;
     std::cout << "Account ID: "; std::cin >> accId;
@@ -170,6 +179,7 @@ int main() {
                   << "13. Find client by name\n"
                   << "14. Delete client\n"
                   << "15. Transaction history (filtered)\n"
+                  << "16. Change interest rate (savings)\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -198,6 +208,7 @@ int main() {
             case 13: menuFindClientByName(); break;
             case 14: menuDeleteClient(); break;
             case 15: menuFilteredHistory(); break;
+            case 16: menuChangeInterestRate(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }
