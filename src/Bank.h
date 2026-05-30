@@ -4,6 +4,7 @@
 #include "SavingsAccount.h"
 #include <vector>
 #include <memory>
+#include <algorithm>
 #include <stdexcept>
 
 class Bank {
@@ -33,6 +34,21 @@ public:
         std::cout << "\n=== All Clients ===\n";
         if (clients.empty()) { std::cout << "No clients.\n"; return; }
         for (auto& c : clients) c->display();
+    }
+
+    bool removeClient(const std::string& clientId) {
+        auto it = std::find_if(clients.begin(), clients.end(),
+            [&](const std::unique_ptr<Client>& c){ return c->getId() == clientId; });
+        if (it == clients.end()) return false;
+
+        accounts.erase(
+            std::remove_if(accounts.begin(), accounts.end(),
+                [&](const std::unique_ptr<Account>& a){ return a->getOwnerId() == clientId; }),
+            accounts.end());
+
+        clients.erase(it);
+        std::cout << "Client " << clientId << " and all their accounts removed.\n";
+        return true;
     }
 
     Account* createChecking(Client* client, double balance, double overdraft = 0) {

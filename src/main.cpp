@@ -61,6 +61,13 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuDeleteClient() {
+    std::string clientId;
+    std::cout << "Client ID to delete: "; std::cin >> clientId;
+    if (!bank.removeClient(clientId))
+        std::cout << "Client not found.\n";
+}
+
 void menuFindClientByName() {
     std::string name;
     std::cout << "Client name (or part of name): "; std::cin >> name;
@@ -130,6 +137,7 @@ int main() {
                   << "11. Lock account\n"
                   << "12. Unlock account\n"
                   << "13. Find client by name\n"
+                  << "14. Delete client\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -156,6 +164,7 @@ int main() {
             case 11: menuLockAccount(); break;
             case 12: menuUnlockAccount(); break;
             case 13: menuFindClientByName(); break;
+            case 14: menuDeleteClient(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }
