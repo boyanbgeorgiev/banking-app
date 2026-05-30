@@ -25,7 +25,7 @@ public:
 
     Client* findClientByName(const std::string& name) const {
         for (auto& c : clients)
-            if (c->getName() == name) return c.get();
+            if (c->getName().find(name) != std::string::npos) return c.get();
         return nullptr;
     }
 

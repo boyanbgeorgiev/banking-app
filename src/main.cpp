@@ -61,6 +61,14 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuFindClientByName() {
+    std::string name;
+    std::cout << "Client name (or part of name): "; std::cin >> name;
+    Client* c = bank.findClientByName(name);
+    if (!c) { std::cout << "No client found with name containing \"" << name << "\".\n"; return; }
+    c->displayReport();
+}
+
 void menuLockAccount() {
     std::string accId;
     std::cout << "Account ID to lock: "; std::cin >> accId;
@@ -121,6 +129,7 @@ int main() {
                   << "10. Apply interest (savings)\n"
                   << "11. Lock account\n"
                   << "12. Unlock account\n"
+                  << "13. Find client by name\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -146,6 +155,7 @@ int main() {
             case 10: bank.applyInterestAll(); break;
             case 11: menuLockAccount(); break;
             case 12: menuUnlockAccount(); break;
+            case 13: menuFindClientByName(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }
