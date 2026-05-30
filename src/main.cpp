@@ -61,6 +61,15 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuChangeOverdraftLimit() {
+    std::string accId;
+    double limit;
+    std::cout << "Checking account ID: "; std::cin >> accId;
+    std::cout << "New overdraft limit: "; std::cin >> limit;
+    if (!bank.setAccountOverdraftLimit(accId, limit))
+        std::cout << "Failed to update overdraft limit.\n";
+}
+
 void menuEditClient() {
     std::string clientId;
     std::cout << "Client ID: "; std::cin >> clientId;
@@ -205,6 +214,7 @@ int main() {
                   << "15. Transaction history (filtered)\n"
                   << "16. Change interest rate (savings)\n"
                   << "17. Edit client info\n"
+                  << "18. Change overdraft limit (checking)\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -235,6 +245,7 @@ int main() {
             case 15: menuFilteredHistory(); break;
             case 16: menuChangeInterestRate(); break;
             case 17: menuEditClient(); break;
+            case 18: menuChangeOverdraftLimit(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }

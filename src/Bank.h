@@ -95,6 +95,20 @@ public:
         for (auto& a : accounts) a->applyInterest();
     }
 
+    bool setAccountOverdraftLimit(const std::string& accId, double newLimit) {
+        Account* acc = findAccount(accId);
+        if (!acc) return false;
+        CheckingAccount* chk = dynamic_cast<CheckingAccount*>(acc);
+        if (!chk) { std::cout << "Account is not a checking account.\n"; return false; }
+        try {
+            chk->setOverdraftLimit(newLimit);
+            return true;
+        } catch (const std::exception& e) {
+            std::cout << "Error: " << e.what() << "\n";
+            return false;
+        }
+    }
+
     bool setAccountInterestRate(const std::string& accId, double newRate) {
         Account* acc = findAccount(accId);
         if (!acc) return false;

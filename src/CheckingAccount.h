@@ -25,4 +25,12 @@ public:
                   << " | Overdraft limit: " << overdraftLimit
                   << " | " << (locked ? "LOCKED" : "active") << "\n";
     }
+
+    void setOverdraftLimit(double newLimit) {
+        if (newLimit < 0) throw std::invalid_argument("Overdraft limit cannot be negative.");
+        overdraftLimit = newLimit;
+        std::cout << "Overdraft limit updated to " << newLimit << "\n";
+    }
+
+    double getOverdraftLimit() const { return overdraftLimit; }
 };
