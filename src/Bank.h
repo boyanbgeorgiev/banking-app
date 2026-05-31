@@ -5,6 +5,8 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
 #include <stdexcept>
 
 class Bank {
@@ -127,5 +129,28 @@ public:
         std::cout << "\n=== All Accounts ===\n";
         if (accounts.empty()) { std::cout << "No accounts.\n"; return; }
         for (auto& a : accounts) a->display();
+    }
+
+    void printStats() const {
+        int totalClients = clients.size();
+        int totalAccounts = accounts.size();
+        int checkingCount = 0, savingsCount = 0;
+        double totalAssets = 0.0;
+
+        for (const auto& a : accounts) {
+            totalAssets += a->getBalance();
+            if (dynamic_cast<CheckingAccount*>(a.get())) ++checkingCount;
+            else ++savingsCount;
+        }
+
+        double avgBalance = totalAccounts > 0 ? totalAssets / totalAccounts : 0.0;
+
+        std::cout << "\n=== Bank Statistics ===\n"
+                  << "Clients:          " << totalClients << "\n"
+                  << "Total accounts:   " << totalAccounts << "\n"
+                  << "  Checking:       " << checkingCount << "\n"
+                  << "  Savings:        " << savingsCount << "\n"
+                  << "Total assets:     " << std::fixed << std::setprecision(2) << totalAssets << "\n"
+                  << "Average balance:  " << avgBalance << "\n";
     }
 };
