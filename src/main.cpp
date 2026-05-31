@@ -61,6 +61,10 @@ void menuCreateClient() {
     std::cout << "Client created: " << c->getId() << "\n";
 }
 
+void menuTopClients() {
+    bank.printTopClients();
+}
+
 void menuBankStats() {
     bank.printStats();
 }
@@ -234,6 +238,7 @@ int main() {
                   << "18. Change overdraft limit (checking)\n"
                   << "19. Export history to file\n"
                   << "20. Bank statistics\n"
+                  << "21. Top clients by net worth\n"
                   << "0.  Exit\n"
                   << "Choice: ";
         std::cin >> choice;
@@ -267,6 +272,7 @@ int main() {
             case 18: menuChangeOverdraftLimit(); break;
             case 19: menuExportHistory(); break;
             case 20: menuBankStats(); break;
+            case 21: menuTopClients(); break;
             case 0:  std::cout << "Bye.\n"; return 0;
             default: std::cout << "Invalid choice.\n";
         }

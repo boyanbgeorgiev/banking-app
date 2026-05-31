@@ -131,6 +131,23 @@ public:
         for (auto& a : accounts) a->display();
     }
 
+    void printTopClients() const {
+        if (clients.empty()) { std::cout << "No clients.\n"; return; }
+
+        std::vector<Client*> sorted;
+        for (const auto& c : clients) sorted.push_back(c.get());
+
+        std::sort(sorted.begin(), sorted.end(),
+            [](Client* a, Client* b){ return a->getNetWorth() > b->getNetWorth(); });
+
+        std::cout << "\n=== Clients Ranked by Net Worth ===\n";
+        int rank = 1;
+        for (Client* c : sorted) {
+            std::cout << "#" << rank++ << " ";
+            c->display();
+        }
+    }
+
     void printStats() const {
         int totalClients = clients.size();
         int totalAccounts = accounts.size();
