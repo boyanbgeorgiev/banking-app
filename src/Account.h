@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 #include <stdexcept>
 
 class Account : public BankEntity {
@@ -64,6 +65,21 @@ public:
             }
         }
         if (!found) std::cout << "No transactions found.\n";
+    }
+
+    bool exportHistory(const std::string& filename) const {
+        std::ofstream file(filename);
+        if (!file.is_open()) return false;
+
+        file << "Transaction history for account " << id << "\n";
+        file << std::string(40, '-') << "\n";
+        for (const auto& tx : history) {
+            file << tx.typeToString()
+                 << " | Amount: " << std::fixed << std::setprecision(2) << tx.getAmount()
+                 << " | Account: " << tx.getAccountId() << "\n";
+        }
+        if (history.empty()) file << "No transactions.\n";
+        return true;
     }
 
     virtual void applyInterest() {}
